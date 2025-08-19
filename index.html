@@ -6,12 +6,76 @@
   <title>Adaptive Learning – Firebase Integration</title>
   <meta name="description" content="Portfolio entry showing Adaptive Learning UI with Firebase-enabled features." />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* minimal in-page styles needed for slideshow; keep rest in styles.css */
+
+    .slideshow-container {
+      position: relative;
+      max-width: 900px;
+      margin: 20px auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .mySlides { position: relative; display: none; text-align: center; }
+    .mySlides img { width: 100%; height: auto; display: block; }
+
+    /* Fade animation */
+    .fade { animation-name: fade; animation-duration: 1s; }
+    @keyframes fade { from { opacity: .4 } to { opacity: 1 } }
+
+    /* Prev/Next buttons */
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      padding: 12px 14px;
+      margin-top: -22px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 20px;
+      border: none;
+      border-radius: 6px;
+      user-select: none;
+      background: rgba(0,0,0,0.5);
+    }
+    .next { right: 10px; }
+    .prev { left: 10px; }
+    .prev:hover, .next:hover { background-color: rgba(0,0,0,0.75); }
+
+    /* Dots */
+    .dot-container { text-align: center; margin-top: 10px; }
+    .dot {
+      cursor: pointer;
+      height: 14px; width: 14px;
+      margin: 0 4px;
+      background-color: #bbb;
+      border-radius: 50%;
+      border: 0;
+      display: inline-block;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+    .active, .dot:hover { background-color: #717171; transform: scale(1.2); }
+
+    /* Caption overlay + pill */
+    .slide-caption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 12px 16px; color: #fff; font-weight: 600; line-height: 1.3;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 100%);
+      text-shadow: 0 1px 2px rgba(0,0,0,.6);
+    }
+    .slide-pill {
+      position: absolute; top: 10px; left: 10px;
+      padding: 4px 10px; border-radius: 999px; font-size: 12px;
+      color: #0b5fa5; background: #fff; border: 1px solid rgba(11,95,165,.18);
+    }
+  </style>
 </head>
 <body>
   <header class="appbar">
     <div class="wrap">
       <div class="brand">Adaptive Learning – Firebase Integration</div>
-      <!-- simple hyperlink (not tabs) -->
       <a class="cta-link" href="contribution.html">My Contribution →</a>
     </div>
   </header>
@@ -20,7 +84,6 @@
     <h1>Adaptive Learning – Firebase-Enabled Tabs</h1>
     <p><strong>Developer:</strong> Bhasker Muda</p>
 
-    <!-- Project Overview -->
     <h2>📌 Project Overview</h2>
     <p>
       A unified Adaptive Learning UI built with <strong>Python + Panel</strong> and integrated with
@@ -29,7 +92,6 @@
       <em>Idea Generator</em>. Each tab uses auth-scoped Firestore reads/writes and runs independently in a single UI.
     </p>
 
-    <!-- Key Features -->
     <h2>🚀 Key Features</h2>
     <ul>
       <li><strong>Unified Panel UI:</strong> single app with pn.Tabs() and one-time Firebase init</li>
@@ -39,7 +101,6 @@
       <li><strong>Idea Generator:</strong> GPT text, AI image, and PDF export saved to Cloud Storage</li>
     </ul>
 
-    <!-- Technologies -->
     <h2>🛠️ Technologies</h2>
     <ul>
       <li><strong>Frontend/UI:</strong> Python, Panel</li>
@@ -48,51 +109,49 @@
       <li><strong>Dev:</strong> GitHub, GitHub Pages</li>
     </ul>
 
-    <!-- Proof as Slideshow with captions -->
+    <!-- Slideshow with captions -->
     <h2>Proof (screens & repo)</h2>
-    <div class="slideshow-container" onmouseover="pauseSlides()" onmouseout="resumeSlides()">
+    <div id="slidebox" class="slideshow-container">
       <div class="mySlides fade">
-        <img src="assets/bookmark.png" alt="Bookmark tab">
+        <img src="./assets/bookmark.png" alt="Bookmark tab">
         <span class="slide-pill">Bookmark</span>
         <div class="slide-caption">Bookmark — save/unsave items to Firestore under <code>users/&lbrace;uid&rbrace;/bookmarks</code></div>
       </div>
 
       <div class="mySlides fade">
-        <img src="assets/leaderboard.png" alt="Leaderboard tab">
+        <img src="./assets/leaderboard.png" alt="Leaderboard tab">
         <span class="slide-pill">Leaderboard</span>
         <div class="slide-caption">Leaderboard — points aggregated and ranked (client read-only; trusted writes optional)</div>
       </div>
 
       <div class="mySlides fade">
-        <img src="assets/career.png" alt="Career tab">
+        <img src="./assets/career.png" alt="Career tab">
         <span class="slide-pill">Career</span>
         <div class="slide-caption">Career — generated plans and progression stored per user</div>
       </div>
 
       <div class="mySlides fade">
-        <img src="assets/language.png" alt="Language tab">
+        <img src="./assets/language.png" alt="Language tab">
         <span class="slide-pill">Language</span>
         <div class="slide-caption">Language — track selected language, sessions, and progress</div>
       </div>
 
       <div class="mySlides fade">
-        <img src="assets/quiz.png" alt="Quiz tab">
+        <img src="./assets/quiz.png" alt="Quiz tab">
         <span class="slide-pill">Quiz</span>
         <div class="slide-caption">Quiz — attempts saved with score and history; progress indicator</div>
       </div>
 
       <div class="mySlides fade">
-        <img src="assets/idea_generator.png" alt="Idea Generator tab">
+        <img src="./assets/idea-generator.png" alt="Idea Generator tab">
         <span class="slide-pill">Idea Generator</span>
         <div class="slide-caption">Idea Generator — create idea text + image and export a PDF to Cloud Storage</div>
       </div>
 
-      <!-- Prev/Next -->
       <button class="prev" aria-label="Previous slide" onclick="plusSlides(-1)">❮</button>
       <button class="next" aria-label="Next slide" onclick="plusSlides(1)">❯</button>
     </div>
 
-    <!-- Dots -->
     <div class="dot-container" role="tablist" aria-label="Slideshow dots">
       <button class="dot" aria-label="Go to slide 1" onclick="currentSlide(1)"></button>
       <button class="dot" aria-label="Go to slide 2" onclick="currentSlide(2)"></button>
@@ -114,46 +173,71 @@
   </footer>
 
   <script>
-    // Slideshow logic with autoplay + hover pause + dots
+    // Slideshow logic with autoplay + hover pause using mouseenter/leave
     let slideIndex = 0;
-    let slideTimer;
+    let slideTimer = null;
+    let paused = false;
+
+    function scheduleNext(delay = 4000) {
+      if (slideTimer) return;          // don't schedule if already scheduled
+      slideTimer = setTimeout(showSlidesAuto, delay);
+    }
+
+    function clearTimer() {
+      if (slideTimer) { clearTimeout(slideTimer); slideTimer = null; }
+    }
 
     function showSlidesAuto() {
       const slides = document.getElementsByClassName("mySlides");
       const dots = document.getElementsByClassName("dot");
 
-      for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
-      slideIndex++;
-      if (slideIndex > slides.length) { slideIndex = 1; }
+      for (let i = 0; i < slides.length; i++) slides[i].style.display = "none";
+      slideIndex = (slideIndex % slides.length) + 1;
 
       for (let i = 0; i < dots.length; i++) {
         dots[i].className = dots[i].className.replace(" active", "");
         dots[i].setAttribute("aria-selected", "false");
       }
 
-      slides[slideIndex-1].style.display = "block";
-      dots[slideIndex-1].className += " active";
-      dots[slideIndex-1].setAttribute("aria-selected", "true");
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " active";
+      dots[slideIndex - 1].setAttribute("aria-selected", "true");
 
-      slideTimer = setTimeout(showSlidesAuto, 4000); // 4 seconds
+      clearTimer();
+      if (!paused) scheduleNext();     // only auto-advance if not paused
     }
 
     function plusSlides(n) {
-      clearTimeout(slideTimer);
-      slideIndex += n - 1; // compensate for next increment
+      clearTimer();
+      const slides = document.getElementsByClassName("mySlides");
+      slideIndex = ((slideIndex - 1 + n + slides.length) % slides.length); // set to 0..len-1
       showSlidesAuto();
     }
 
     function currentSlide(n) {
-      clearTimeout(slideTimer);
+      clearTimer();
       slideIndex = n - 1;
       showSlidesAuto();
     }
 
-    function pauseSlides() { clearTimeout(slideTimer); }
-    function resumeSlides() { showSlidesAuto(); }
+    function pauseSlides() {
+      paused = true;
+      clearTimer();
+    }
 
-    // start
+    function resumeSlides() {
+      if (!paused) return;
+      paused = false;
+      clearTimer();
+      scheduleNext(0);                 // resume immediately
+    }
+
+    // attach non-bubbling events (prevents flicker on child hover)
+    const box = document.getElementById('slidebox');
+    box.addEventListener('mouseenter', pauseSlides);
+    box.addEventListener('mouseleave', resumeSlides);
+
+    // start the show
     showSlidesAuto();
   </script>
 </body>
